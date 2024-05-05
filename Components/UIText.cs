@@ -66,7 +66,7 @@ namespace StoneShard_Mono.Components
                 if (_width == 0 || _height == 0)
                 {
                     foreach (var text in texts)
-                        _width = Math.Max(_width, (int)_font.MeasureString(texts[0]).X);
+                        _width = Math.Max(_width, (int)_font.MeasureString(text).X);
                     _height = (int)_font.MeasureString(texts[0]).Y * texts.Count;
                 }
 
