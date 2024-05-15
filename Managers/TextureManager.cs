@@ -13,6 +13,8 @@ namespace StoneShard_Mono.Managers
 
         public Dictionary<string, Texture2D> UI = new();
 
+        public Dictionary<string, Texture2D> Tile = new();
+
         public override void LoadOne(string dir, Dictionary<string, Texture2D> dictronary)
         {
             var path = Path.Combine(Main.GamePath, "Content\\Textures", dir);
@@ -24,7 +26,7 @@ namespace StoneShard_Mono.Managers
             }
         }
 
-        public Texture2D this[TexType type, string ID, int scale = 1]
+        public Texture2D this[TexType type, string ID, int scale = 2]
         {
             get
             {
@@ -39,6 +41,9 @@ namespace StoneShard_Mono.Managers
                         break;
                     case TexType.UI:
                         src = UI[ID];
+                        break;
+                    case TexType.Tile:
+                        src = Tile[ID];
                         break;
                     default: return null;
                 }
@@ -69,6 +74,7 @@ namespace StoneShard_Mono.Managers
     public enum TexType : int
     {
         Entity,
-        UI
+        UI,
+        Tile
     }
 }

@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public class StateContainer : Container
     {
-        public StateContainer(Vector2 size, EventHandler click = null, EventHandler<GameTime> updating = null, 
+        public StateContainer(Vector2 size = default, EventHandler click = null, EventHandler<GameTime> updating = null, 
             EventHandler<(SpriteBatch spriteBatch, GameTime gameTime)> draw = null) 
         {
             States = new();
@@ -58,7 +58,7 @@ namespace StoneShard_Mono.Components
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if (!_init) return;
+            if (!_init || !Visible) return;
             base.Draw(spriteBatch, gameTime);
             Drawing?.Invoke(this, (spriteBatch, gameTime));
         }

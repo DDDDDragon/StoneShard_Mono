@@ -1,4 +1,4 @@
-﻿using StoneShard_Mono.Components;
+﻿using StoneShard_Mono.UIComponents;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace StoneShard_Mono.Animations
 {
     public class Animation
     {
-        public Animation(Component target, float maxTime, string tag = "") 
+        public Animation(Entity target = null, int maxTime = 1, string tag = "") 
         {
             Target = target;
             MaxTime = maxTime;
@@ -22,23 +22,28 @@ namespace StoneShard_Mono.Animations
 
         public static Animation Empty => new Animation(null, 0);
 
-        public float MaxTime;
+        public int MaxTime;
 
-        public float Time;
+        public int Time;
 
-        public Component Target;
+        public virtual Entity Target { get; set; }
 
-        public EventHandler<Component> DoAnimation;
+        private bool _initialized;
+
+        public bool Initialized => _initialized;
+
+        public virtual void SetDefaults()
+        {
+
+        }
 
         public virtual void Update(GameTime gameTime)
         {
-            if (MaxTime != 0)
+            if (MaxTime != 0 && Time == MaxTime) End();
+            if(!_initialized)
             {
-                DoAnimation?.Invoke(this, Target);
-
-                Time += 0.05f;
-
-                if (Time >= MaxTime) End();
+                SetDefaults();
+                _initialized = true;
             }
         }
 

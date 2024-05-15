@@ -7,12 +7,14 @@ using System.Linq;
 using StoneShard_Mono.Animations;
 using StoneShard_Mono.Extensions;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public class Component
     {
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            if (!Visible)
+                return;
             if (BackgroundColor != default)
                 spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, Width, Height), BackgroundColor * _alpha);
 
@@ -57,16 +59,20 @@ namespace StoneShard_Mono.Components
                 _isHovering = true;
 
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed && CanClick)
+                {
+                    Clicked = true;
                     Click?.Invoke(this, new EventArgs());
+                }
             }
 
             CurrentAnimation?.Update(gameTime);
 
             if (!_init) _init = true;
 
+            if (HorizontalMiddle) RelativePosition.X = (Parent.Width - Width) / 2;
+            if (VerticalMiddle) RelativePosition.Y = (Parent.Height - Height) / 2;
 
-            if (HorizontalMiddle) Position.X = (Parent.Width - Width) / 2;
-            if (VerticalMiddle) Position.Y = (Parent.Height - Height) / 2;
+            DrawOffset = new(0, 0);
         }
 
         internal float _alpha = 1;
@@ -87,13 +93,13 @@ namespace StoneShard_Mono.Components
 
         public float Scale;
 
+        public Vector2 Size => new(Width, Height);
+
         public virtual int Height => _texture.Height;
 
         public virtual int Width => _texture.Width;
 
-        public bool Middle = false;
-
-        public bool Clicked { get; private set; }
+        public bool Clicked { get; internal set; }
 
         public Color BackgroundColor;
 
@@ -103,13 +109,13 @@ namespace StoneShard_Mono.Components
 
         public float Rotation;
 
-        public bool AnchorBottom = false;
-
         public Animation CurrentAnimation = Animation.Empty;
 
         public bool shouldCollect = false;
 
         public Vector2 DrawOffset = new(0, 0);
+
+        public float DrawScale = 1f;
 
         public Container Parent;
 
@@ -119,6 +125,8 @@ namespace StoneShard_Mono.Components
 
         public bool HorizontalMiddle;
         public bool VerticalMiddle;
+
+        public virtual bool Visible { get; set; } = true;
 
         public virtual Rectangle Rectangle
         {

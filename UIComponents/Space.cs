@@ -1,4 +1,4 @@
-﻿namespace StoneShard_Mono.Components
+﻿namespace StoneShard_Mono.UIComponents
 {
     public class Space : Component
     {

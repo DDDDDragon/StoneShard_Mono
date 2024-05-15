@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public abstract class Container : Component
     {
@@ -27,8 +27,6 @@ namespace StoneShard_Mono.Components
             component.Parent = this;
             Children.Add(component);
         }
-
-        public bool childMiddle = true;
 
         public override void Update(GameTime gameTime)
         {
@@ -51,7 +49,7 @@ namespace StoneShard_Mono.Components
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if (!_init) return;
+            if (!_init || !Visible) return;
             base.Draw(spriteBatch, gameTime);
             foreach (var component in Children)
                 component.Draw(spriteBatch, gameTime);
@@ -105,6 +103,17 @@ namespace StoneShard_Mono.Components
                 foreach (var components in Children)
                     components.Alpha = value;
             }
+        }
+
+        public override bool Visible 
+        { 
+            get => base.Visible; 
+            set
+            {
+                base.Visible = value;
+                foreach (var components in Children)
+                    components.Visible = value;
+            } 
         }
     }
 }

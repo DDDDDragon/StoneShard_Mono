@@ -1,4 +1,4 @@
-﻿using StoneShard_Mono.Components;
+﻿using StoneShard_Mono.UIComponents;
 using StoneShard_Mono.Extensions;
 using Microsoft.Xna.Framework;
 using System;
@@ -7,7 +7,7 @@ namespace StoneShard_Mono.Animations
 {
     public class PunchAnimation : Animation
     {
-        public PunchAnimation(Component target, float maxTime, float strength, string tag = "") : base(target, maxTime, tag)
+        public PunchAnimation(Entity target, int maxTime, float strength, string tag = "") : base(target, maxTime, tag)
         {
             _strength = strength;
 
@@ -19,7 +19,7 @@ namespace StoneShard_Mono.Animations
 
             _vibrationCyclesPerSecond = 1f;
 
-            _framesToLast = (int)maxTime;
+            _framesToLast = maxTime;
         }
 
         public float Remap(float fromValue, float fromMin, float fromMax, float toMin, float toMax, bool clamped = true)

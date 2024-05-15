@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using StoneShard_Mono.UIComponents;
 using StoneShard_Mono.Managers;
 using StoneShard_Mono.Scenes;
 using System;
@@ -12,10 +13,16 @@ namespace StoneShard_Mono
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        public static Vector2 GameSize => new(GameWidth, GameHeight);
+
         public static int GameHeight => Instance._graphics.PreferredBackBufferHeight;
         public static int GameWidth => Instance._graphics.PreferredBackBufferWidth;
 
+        public static int TileSize = 52;
+
         internal static string GamePath => Environment.CurrentDirectory;
+
+        public static string CurrentLanguage;
 
         public static Main Instance;
 
@@ -27,16 +34,12 @@ namespace StoneShard_Mono
 
         public static Random Random;
 
-        public static string CurrentLanguage;
-
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = 1920,
                 PreferredBackBufferHeight = 1200,
-                HardwareModeSwitch = false,
-                PreferMultiSampling = false
             };
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -54,6 +57,9 @@ namespace StoneShard_Mono
             FontManager.Load();
             LocalizationManager.Load();
 
+            var cursor = MouseCursor.FromTexture2D(TextureManager[TexType.UI, "cursor"], 0, 0);
+            Mouse.SetCursor(cursor);
+
             base.Initialize();
         }
 
@@ -61,7 +67,7 @@ namespace StoneShard_Mono
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            CurrentScene = new MenuScene();
+            CurrentScene = new GameScene();
         }
 
         protected override void Update(GameTime gameTime)
@@ -77,7 +83,7 @@ namespace StoneShard_Mono
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone);
 
             CurrentScene.Draw(_spriteBatch, gameTime);
 

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using StoneShard_Mono.Extensions;
-using StoneShard_Mono.Components;
+using StoneShard_Mono.UIComponents;
 
 namespace StoneShard_Mono.Scenes
 {
@@ -29,13 +29,7 @@ namespace StoneShard_Mono.Scenes
         public virtual void Update(GameTime gameTime)
         {
             foreach (var component in Components)
-            {
-                if (component.Middle)
-                    component.Position.X = (Main.GameWidth - component.Width) / 2;
-                if (component.AnchorBottom)
-                    component.Position.Y = Main.GameHeight - component.Height;
                 component.Update(gameTime);
-            }
         }
 
         public List<Component> Components { get; set; } = new List<Component>();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public class Timer: Component
     {

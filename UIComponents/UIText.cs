@@ -7,12 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public class UIText : Component
     {
         public UIText(string fontID, Vector2 size = default, string text = "", int fontSize = 20, int newLineNum = int.MaxValue, 
-            bool textHorizontalMiddle = false, bool textVerticalMiddle = false, Color? fontColor = null, string splitCharacter = "") 
+            bool textHorizontalMiddle = false, bool textVerticalMiddle = false, Color? fontColor = null, string splitCharacter = "",
+            Vector2 relativePos = default) 
         {
             _font = Main.FontManager[fontID, fontSize];
 
@@ -26,11 +27,29 @@ namespace StoneShard_Mono.Components
 
             SplitCharacter = splitCharacter;
 
-            FontColor = fontColor == null ? Color.Black : (Color)fontColor;
+            FontColor = fontColor == null ? Color.White : (Color)fontColor;
 
             _width = (int)size.X;
 
             _height = (int)size.Y;
+
+            if (!string.IsNullOrEmpty(Text))
+            {
+                var texts = new List<string>();
+                if (NewLineNum != int.MaxValue)
+                    texts = Text.SplitWithCount(NewLineNum);
+                if (SplitCharacter != null)
+                    texts = Text.Split(SplitCharacter).ToList();
+
+                if (_width == 0 || _height == 0)
+                {
+                    foreach (var txt in texts)
+                        _width = Math.Max(_width, (int)_font.MeasureString(txt).X);
+                    _height = (int)_font.MeasureString(texts[0]).Y * texts.Count;
+                }
+            }
+
+                RelativePosition = relativePos == default ? new(0, 0) : relativePos;
         }
         internal int _width;
 
@@ -50,7 +69,7 @@ namespace StoneShard_Mono.Components
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if (!_init) return;
+            if (!_init || !Visible) return;
 
             if (BackgroundColor != default)
                 spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, Width, Height), BackgroundColor * Alpha);
@@ -62,13 +81,6 @@ namespace StoneShard_Mono.Components
                     texts = Text.SplitWithCount(NewLineNum);
                 if (SplitCharacter != null)
                     texts = Text.Split(SplitCharacter).ToList();
-
-                if (_width == 0 || _height == 0)
-                {
-                    foreach (var text in texts)
-                        _width = Math.Max(_width, (int)_font.MeasureString(text).X);
-                    _height = (int)_font.MeasureString(texts[0]).Y * texts.Count;
-                }
 
                 int x, y = 0;
                 if (TextVerticalMiddle)

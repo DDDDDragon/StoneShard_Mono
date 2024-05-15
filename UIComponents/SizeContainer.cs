@@ -2,7 +2,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace StoneShard_Mono.Components
+namespace StoneShard_Mono.UIComponents
 {
     public class SizeContainer : Container
     {
