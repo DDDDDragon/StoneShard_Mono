@@ -42,6 +42,11 @@ namespace StoneShard_Mono.Extensions
         {
             batch.Draw(pixel, rect, color);
         }
+
+        public static void DrawRectangle(this SpriteBatch batch, Rectangle rect, Color color, float rotation = 0f, Vector2 origin = default, float scale = 1, SpriteEffects effects = SpriteEffects.None, float layerDepth = 1)
+        {
+            batch.Draw(pixel, rect, null, color, rotation, origin, effects, layerDepth);
+        }
     }
 
     public struct Line

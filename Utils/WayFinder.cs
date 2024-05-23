@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using StoneShard_Mono.Content.Rooms;
 using StoneShard_Mono.Extensions;
-using StoneShard_Mono.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +42,8 @@ namespace StoneShard_Mono.Utils
             {
                 for (int y = 0; y < _room.TileMapSize.Y; y++)
                 {
-                    gScore.Add(new(x + _room.TilePostion.X, y + _room.TilePostion.Y), int.MaxValue);
-                    hScore.Add(new(x + _room.TilePostion.X, y + _room.TilePostion.Y), int.MaxValue);
+                    gScore.Add(new(x, y), int.MaxValue);
+                    hScore.Add(new(x, y), int.MaxValue);
                 }
             }
 
@@ -70,7 +70,7 @@ namespace StoneShard_Mono.Utils
                     {
                         continue;
                     }
-                    if (neighbor.X < 0 || neighbor.X >= _room.TileMapSize.X + _room.TilePostion.X || neighbor.Y < 0 || neighbor.Y >= _room.TileMapSize.Y + _room.TilePostion.Y)
+                    if (neighbor.X < 0 || neighbor.X >= _room.TileMapSize.X || neighbor.Y < 0 || neighbor.Y >= _room.TileMapSize.Y)
                     {
                         continue;
                     }

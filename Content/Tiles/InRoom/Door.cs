@@ -1,0 +1,53 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StoneShard_Mono.Content.Rooms;
+using StoneShard_Mono.Extensions;
+
+namespace StoneShard_Mono.Content.Tiles.InRoom
+{
+    public class Door : Tile
+    {
+        public Vector2 realPos;
+
+        public Room ToRoom;
+
+        public override void SetStaticDefaults()
+        {
+            TileName = "door";
+
+            TileID = 3;
+
+            TileSize = new(1, 1);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            spriteBatch.Rebegin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone, sortMode: SpriteSortMode.BackToFront, blendState: BlendState.Additive);
+            if(_isHovering)
+            {
+                base.Draw(spriteBatch, gameTime);
+            }
+            spriteBatch.Rebegin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone, sortMode: SpriteSortMode.BackToFront);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (_isHovering)
+            {
+                if (Main.CursorType == "cursor")
+                    Main.SetCursor("cursor_exit");
+                Main.GameScene.MouseTile = realPos;
+                Main.GameScene.DrawSelectBox = false;
+            }
+            else if (Main.CursorType == "cursor_exit")
+            {
+                Main.SetCursor("cursor");
+                Main.GameScene.DrawSelectBox = true;
+            }
+
+            //if (Main.LocalPlayer.TilePosition == realPos)
+                //Main.GameScene.GoToRoom(ToRoom);
+        }
+    }
+}

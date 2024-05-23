@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StoneShard_Mono.UIComponents;
+using StoneShard_Mono.Content;
+using StoneShard_Mono.Content.Players;
+using StoneShard_Mono.Content.Scenes;
+using StoneShard_Mono.Loaders;
 using StoneShard_Mono.Managers;
-using StoneShard_Mono.Scenes;
 using System;
 
 namespace StoneShard_Mono
@@ -32,7 +34,17 @@ namespace StoneShard_Mono
 
         public static Scene CurrentScene;
 
+        public static GameScene GameScene => CurrentScene as GameScene;
+
         public static Random Random;
+
+        public static RenderTarget2D RenderTarget;
+
+        public static bool PlayerTurn => GameScene.TurnController.PlayerTurn;
+
+        public static string CursorType;
+
+        public static Player LocalPlayer;
 
         public Main()
         {
@@ -49,16 +61,20 @@ namespace StoneShard_Mono
             FontManager = new FontManager();
             LocalizationManager = new LocalizationManager();
             CurrentLanguage = "en_US";
+            CursorType = "";
+            LocalPlayer = null;
         }
-
         protected override void Initialize()
         {
             TextureManager.Load();
             FontManager.Load();
             LocalizationManager.Load();
 
-            var cursor = MouseCursor.FromTexture2D(TextureManager[TexType.UI, "cursor"], 0, 0);
-            Mouse.SetCursor(cursor);
+            RenderTarget = new(_graphics.GraphicsDevice, GameWidth, GameHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+
+            SetCursor("cursor");
+
+            EntityLoader.Load();
 
             base.Initialize();
         }
@@ -82,8 +98,9 @@ namespace StoneShard_Mono
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone);
+            GraphicsDevice.Clear(Color.Transparent);
+
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone, sortMode: SpriteSortMode.BackToFront);
 
             CurrentScene.Draw(_spriteBatch, gameTime);
 
@@ -97,6 +114,13 @@ namespace StoneShard_Mono
             return language == "" 
                 ? LocalizationManager[CurrentLanguage, key]
                 : LocalizationManager[language, key];
+        }
+
+        public static void SetCursor(string texID)
+        {
+            var cursor = MouseCursor.FromTexture2D(TextureManager[TexType.UI, texID], 0, 0);
+            Mouse.SetCursor(cursor);
+            CursorType = texID;
         }
     }
 }
