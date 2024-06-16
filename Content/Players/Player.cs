@@ -3,11 +3,23 @@ using Microsoft.Xna.Framework;
 using StoneShard_Mono.Managers;
 using StoneShard_Mono.Content.Components;
 using StoneShard_Mono.Extensions;
+using StoneShard_Mono.Content.Rooms;
 
 namespace StoneShard_Mono.Content.Players
 {
     public abstract class Player : Entity
     {
+        public void GoToRoom(Room room, Vector2 pos)
+        {
+            CurrentRoom = room;
+
+            room.Player = this;
+
+            room.RegisterEntity(this, pos);
+
+            SetPos(pos);
+        }
+
         public override void SetDefaults()
         {
             Timer = new Timer();
@@ -96,5 +108,181 @@ namespace StoneShard_Mono.Content.Players
         public override Rectangle Rectangle => new((int)Position.X, (int)Position.Y, Width + 12, Height + 12);
 
         public Timer Timer;
+
+        #region 属性-Attributes
+
+        /// <summary>
+        /// 主手伤害
+        /// </summary>
+        public int MainHandDamage { get; set; }
+
+        /// <summary>
+        /// 副手伤害
+        /// </summary>
+        public int OffHandDamage { get; set; }
+
+        public float WeaponDamage { get; set; }
+
+        public float MainHandEfficiency { get; set; }
+
+        public float OffHandEfficiency { get; set; }
+
+        public float BodypartDamage { get; set; }
+
+        public float ArmorDamage { get; set; }
+
+        public float ArmorPenetration { get; set; }
+
+        public float Accuracy { get; set; }
+
+        public float CritChance { get; set; }
+
+        public float CritEfficiency { get; set; }
+
+        public float CounterChance { get; set; }
+
+        public float FumbleChance { get; set; }
+
+        public float SkillsEnergyCost { get; set; }
+
+        public float SpellsEnergyCost { get; set; }
+
+        public float CooldownsDuration { get; set; }
+
+        public int BonusRange { get; set; }
+
+        public float BleedChance { get; set; }
+
+        public float DazeChance { get; set; }
+
+        public float StunChance { get; set; }
+
+        public float KnockbackChance { get; set; }
+
+        public float ImmobilizationChance { get; set; }
+
+        public float StaggerChance { get; set; }
+
+        public float LifeDrain { get; set; }
+
+        public float EnergyDrain { get; set; }
+
+        public float ExperienceGain { get; set; }
+
+        public int Health { get; set; }
+
+        public int MaxHealth { get; set; }
+
+        public float HealthRestoration { get; set; }
+
+        public float HealingEfficiency { get; set; }
+
+        public int Energy { get; set; }
+
+        public int MaxEnergy { get; set; }
+
+        public float EnergyRestoration { get; set; }
+
+        public int Protection { get; set; }
+
+        public float BlockChance { get; set; }
+
+        public int BlockPower { get; set; }
+
+        public int MaxBlockPower { get; set; }
+
+        public float BlockPowerRecovery { get; set; }
+
+        public float DodgeChance { get; set; }
+
+        public float Stealth { get; set; }
+
+        public float NoiseProduced { get; set; }
+
+        public float Lockpicking_Disarming { get; set; }
+
+        public int Vision { get; set; }
+
+        public float Fortitude { get; set; }
+
+        public float DamageReflection { get; set; }
+
+        public float BleedResistance { get; set; }
+
+        public float ControlResistance { get; set; }
+
+        public float MoveResistance { get; set; }
+
+        public float HungerResistance { get; set; }
+
+        public float IntoxicationResistance { get; set; }
+
+        public float PainResistance { get; set; }
+
+        public float FatigueResistance { get; set; }
+
+        public float DamageTaken { get; set; }
+
+        public float PhysicalResistance { get; set; }
+
+        public float NatureResistance { get; set; }
+
+        public float MagicResistance { get; set; }
+
+        public float SlashingResistance { get; set; }
+
+        public float PiercingResistance { get; set; }
+
+        public float CrushingResistance { get; set; }
+
+        public float RendingResistance { get; set; }
+
+        public float FireResistance { get; set; }
+
+        public float PoisonResistance { get; set; }
+
+        public float FrostResistance { get; set; }
+
+        public float ShockResistance { get; set; }
+
+        public float CausticResistace { get; set; }
+
+        public float ArcaneResistace { get; set; }
+
+        public float SacredResistance { get; set; }
+
+        public float UnholyResistance { get; set; }
+
+        public float PsionicResistance { get; set; }
+
+        public float MagicPower { get; set; }
+
+        public float MiracleChance { get; set; }
+
+        public float MiraclePotency { get; set; }
+
+        public float BackfireChance { get; set; }
+
+        public float BackfireDamage { get; set; }
+
+        public float PyromanticPower { get; set; }
+
+        public float GeomanticPower { get; set; }
+
+        public float VenomanticPower { get; set; }
+
+        public float CryomanticPower { get; set; }
+
+        public float ElectromanticPower { get; set; }
+
+        public float ArcanisticPower { get; set; }
+
+        public float AstromanticPower { get; set; }
+
+        public float PsionicPower { get; set; }
+
+        public float ChronomanticPower { get; set; }
+
+        #endregion
     }
 }

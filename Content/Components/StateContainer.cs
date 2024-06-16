@@ -18,7 +18,7 @@ namespace StoneShard_Mono.Content.Components
             States = new();
             _width = (int)size.X;
             _height = (int)size.Y;
-            Click += click != null ? click : (sender, args) => { };
+            OnClick += click != null ? click : (sender, args) => { };
             Drawing += draw != null ? draw : (sender, SpriteBatch) => { };
             Updating += updating != null ? updating : (sender, SpriteBatch) => { };
             var state = new SizeContainer(size);

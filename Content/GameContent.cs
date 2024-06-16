@@ -12,6 +12,8 @@ namespace StoneShard_Mono.Content
 {
     public abstract class GameContent
     {
+        public virtual string Name { get; set; }
+
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             

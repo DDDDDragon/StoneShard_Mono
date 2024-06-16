@@ -40,6 +40,8 @@ namespace StoneShard_Mono
 
         public bool Clicked { get; internal set; }
 
+        public bool UseAdditive = false;
+
         internal int _width;
 
         internal int _height;
@@ -77,6 +79,17 @@ namespace StoneShard_Mono
         {
             CurrentRoom = room;
         }
+
+        public void SetPos(Vector2 pos)
+        {
+            LastTilePos = pos;
+
+            TilePosition = pos;
+
+            TargetTilePos = pos;
+        }
+
+        public void SetPos(int x, int y) => SetPos(new Vector2(x, y));
 
         public override void Update(GameTime gameTime)
         {

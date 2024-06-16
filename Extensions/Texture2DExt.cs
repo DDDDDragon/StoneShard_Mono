@@ -7,6 +7,7 @@ namespace StoneShard_Mono.Extensions
     {
         public static Vector2 GetSize(this Texture2D tex)
         {
+            if(tex == null) return new Vector2(0, 0);
             return new(tex.Width, tex.Height);
         }
     }

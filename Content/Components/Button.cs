@@ -38,7 +38,7 @@ namespace StoneShard_Mono.Content.Components
                     args.spriteBatch.Draw(_texture, destination, new(new(0, 0), Size.ToPoint()), Color.White * Alpha, Rotation, Size / 2, SpriteEffects.None, 0);
             });
 
-            Click += click != null ? click : (obj, args) => { };
+            OnClick += click != null ? click : (obj, args) => { };
 
             Hover = hoverID == "" ? _texture : Main.TextureManager[TexType.UI, hoverID, scale];
             Press = pressID == "" ? _texture : Main.TextureManager[TexType.UI, pressID, scale];

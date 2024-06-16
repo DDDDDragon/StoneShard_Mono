@@ -11,13 +11,33 @@ namespace StoneShard_Mono.Content.Tiles.InRoom
 
         public Room ToRoom;
 
+        private bool _enterCheck = false;
+
         public override void SetStaticDefaults()
         {
-            TileName = "door";
+            base.SetStaticDefaults();
 
-            TileID = 3;
+            Main.TileID[GetType().Name] = 3;
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
 
             TileSize = new(1, 1);
+
+            UseAdditive = true;
+
+            OnClick += (e, args) =>
+            {
+                if (Main.LocalPlayer.TilePosition == realPos && !Main.LocalPlayer.IsMove)
+                {
+                    Main.GameScene.GoToRoom(ToRoom);
+                    Main.SetCursor("cursor");
+                }
+
+                _enterCheck = true;
+            };
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -32,7 +52,6 @@ namespace StoneShard_Mono.Content.Tiles.InRoom
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             if (_isHovering)
             {
                 if (Main.CursorType == "cursor")
@@ -41,13 +60,19 @@ namespace StoneShard_Mono.Content.Tiles.InRoom
                 Main.GameScene.DrawSelectBox = false;
             }
             else if (Main.CursorType == "cursor_exit")
-            {
                 Main.SetCursor("cursor");
-                Main.GameScene.DrawSelectBox = true;
+
+            if(_enterCheck && !Main.LocalPlayer.IsMove)
+            {
+                if (Main.LocalPlayer.TilePosition == realPos)
+                {
+                    Main.GameScene.GoToRoom(ToRoom);
+                    Main.SetCursor("cursor");
+                }
+                _enterCheck = false;
             }
 
-            //if (Main.LocalPlayer.TilePosition == realPos)
-                //Main.GameScene.GoToRoom(ToRoom);
+            base.Update(gameTime);
         }
     }
 }

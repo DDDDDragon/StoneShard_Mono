@@ -6,13 +6,11 @@ namespace StoneShard_Mono.Content.Tiles
 {
     public abstract class Tile : Entity
     {
-        public static Vector2 TileSize;
-
-        public static string TileName;
-
-        public static int TileID { get; set; } = 1;
+        public static int TileID;
 
         public virtual Texture2D Texture { get; set; }
+
+        public Vector2 TileSize;
 
         public int SubID 
         { 
@@ -21,7 +19,7 @@ namespace StoneShard_Mono.Content.Tiles
             }
             set {
                 _subID = value;
-                Texture = Main.TextureManager[TexType.Tile, $"General\\{TileName}_{SubID}"];
+                SetSubTexture(value);
             } 
         }
 
@@ -36,6 +34,11 @@ namespace StoneShard_Mono.Content.Tiles
             get => (TilePosition + CurrentRoom.TilePostion) * Main.TileSize; 
         }
 
+        public virtual void SetSubTexture(int subID)
+        {
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -47,6 +50,11 @@ namespace StoneShard_Mono.Content.Tiles
                     CurrentRoom[i, j] = TileID;
                 }
             }
+        }
+
+        public override void SetStaticDefaults()
+        {
+            if (Main.TileID.ContainsKey(GetType().Name)) return;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

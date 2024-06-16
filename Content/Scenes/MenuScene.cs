@@ -27,16 +27,16 @@ namespace StoneShard_Mono.Content.Scenes
                 Main.GetText("beta"), textHorizontalMiddle: true, textVerticalMiddle: true,
                 splitCharacter: "\n", fontColor: Color.White, fontSize: 30));
 
-            loading.RegisterState("loading_1", new UIImage("ISG_logo", horizontalMiddle: true, verticalMiddle: true));
+            loading.RegisterState("loading_1", new UIImage("Menu\\ISG_logo", horizontalMiddle: true, verticalMiddle: true));
 
-            loading.RegisterState("loading_2", new UIImage("HT_logo", horizontalMiddle: true, verticalMiddle: true));
+            loading.RegisterState("loading_2", new UIImage("Menu\\HT_logo", horizontalMiddle: true, verticalMiddle: true));
 
             #region 第三幕
 
             var column = new ColumnContainer();
             column.RegisterChild(new UIText("SSFont", text: Main.GetText("save_top"), fontColor: Color.White, fontSize: 30, textVerticalMiddle: true) { HorizontalMiddle = true });
             column.RegisterChild(new Space(1, 20));
-            column.RegisterChild(new UIImage("Loading", horizontalMiddle: true, frame: 26, frameMaxTime: 8));
+            column.RegisterChild(new UIImage("Menu\\Loading", horizontalMiddle: true, frame: 26, frameMaxTime: 8));
             column.RegisterChild(new Space(1, 20));
             column.RegisterChild(new UIText("SSFont", text: Main.GetText("save_bottom"), fontColor: Color.White, fontSize: 30, textHorizontalMiddle: true) { HorizontalMiddle = true });
             column.HorizontalMiddle = true;
@@ -50,21 +50,21 @@ namespace StoneShard_Mono.Content.Scenes
 
             var size = new SizeContainer(Main.GameWidth, Main.GameHeight);
 
-            size.RegisterChild(new UIImage("mainMenuBG", relativePos: new(-80, 250)) { id = "background" });
+            size.RegisterChild(new UIImage("Menu\\mainMenuBG", relativePos: new(-80, 250)) { id = "background" });
 
-            size.RegisterChild(new UIImage("menuBlink", relativePos: new(82, 678), frame: 6, frameMaxTime: 10) { id = "blink", Alpha = 0.1f });
+            size.RegisterChild(new UIImage("Menu\\menuBlink", relativePos: new(82, 678), frame: 6, frameMaxTime: 10) { id = "blink", Alpha = 0.1f });
 
-            size.RegisterChild(new UIImage("menuShard", relativePos: new(240, 706), frame: 30, frameMaxTime: 5) { id = "shard" });
+            size.RegisterChild(new UIImage("Menu\\menuShard", relativePos: new(240, 706), frame: 30, frameMaxTime: 5) { id = "shard" });
 
-            size.RegisterChild(new UIImage("menuSparkles", relativePos: new(180, 584), frame: 30, frameMaxTime: 5) { id = "sparkles" });
+            size.RegisterChild(new UIImage("Menu\\menuSparkles", relativePos: new(180, 584), frame: 30, frameMaxTime: 5) { id = "sparkles" });
 
-            size.RegisterChild(new UIImage("mainMenuParralax_1", relativePos: new(534, 696), frame: 6, frameMaxTime: 10) { id = "parralax_1" });
+            size.RegisterChild(new UIImage("Menu\\mainMenuParralax_1", relativePos: new(534, 696), frame: 6, frameMaxTime: 10) { id = "parralax_1" });
 
-            size.RegisterChild(new UIImage("mainMenuParralax_2", relativePos: new(-46, 896), frame: 6, frameMaxTime: 10) { id = "parralax_2" });
+            size.RegisterChild(new UIImage("Menu\\mainMenuParralax_2", relativePos: new(-46, 896), frame: 6, frameMaxTime: 10) { id = "parralax_2" });
 
-            size.RegisterChild(new UIImage("menuVingette") { Alpha = 0.5f });
+            size.RegisterChild(new UIImage("Menu\\menuVingette") { Alpha = 0.5f });
 
-            size.RegisterChild(new UIImage("light", drawMode: BlendState.Additive) { Alpha = 0.47f, id = "light" });
+            size.RegisterChild(new UIImage("Menu\\light", drawMode: BlendState.Additive) { Alpha = 0.47f, id = "light" });
 
             size.RegisterChild(new UIText("SSFont", text: Main.GetText("press_any"), fontSize: 30, fontColor: Color.White, relativePos: new(0, 1100)) { HorizontalMiddle = true, id = "press" });
 
@@ -72,7 +72,7 @@ namespace StoneShard_Mono.Content.Scenes
 
             var menu = new ColumnContainer() { ChildrenMargin = 2, RelativePosition = new(1500, 300), id = "menu" };
 
-            menu.RegisterChild(new UIImage("StoneShardLogo", frame: 10, frameMaxTime: 10, repeat: false));
+            menu.RegisterChild(new UIImage("Menu\\StoneShardLogo", frame: 10, frameMaxTime: 10, repeat: false));
 
             menu.RegisterChild(new Space(1, 16));
 
@@ -86,19 +86,19 @@ namespace StoneShard_Mono.Content.Scenes
 
             var menu_0 = new ColumnContainer() { ChildrenMargin = 2 };
 
-            menu_0.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_0.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("play"), fontSize: 25, click: (sender, args) => { menuState.SwitchToState("menu_play"); })
             { id = "play", HorizontalMiddle = true });
 
-            menu_0.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_0.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("settings"), fontSize: 25)
             { id = "settings", HorizontalMiddle = true });
 
-            menu_0.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_0.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("credits"), fontSize: 25)
             { id = "credits", HorizontalMiddle = true });
 
-            menu_0.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_0.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("exit"), fontSize: 25)
             { id = "exit", HorizontalMiddle = true });
 
@@ -112,7 +112,7 @@ namespace StoneShard_Mono.Content.Scenes
 
             var menu_play = new ColumnContainer() { ChildrenMargin = 2 };
 
-            menu_play.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_play.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("new_game"), fontSize: 25, click: (sender, args) => { menuState.SwitchToState("menu_new_game"); })
             { id = "newGame", HorizontalMiddle = true });
 
@@ -120,7 +120,7 @@ namespace StoneShard_Mono.Content.Scenes
 
             menu_play.RegisterChild(new Space(10, 20));
 
-            menu_play.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_play.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("back"), fontSize: 25, click: (sender, args) => { menuState.SwitchToState("menu_0"); })
             { id = "back", HorizontalMiddle = true });
 
@@ -132,15 +132,13 @@ namespace StoneShard_Mono.Content.Scenes
 
             var menu_new_game = new ColumnContainer() { ChildrenMargin = 2 };
 
-            menu_new_game.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_new_game.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("adventure"), fontSize: 25)
             { id = "newGame", HorizontalMiddle = true });
 
-            //如果有存档添加一个load按钮
-
             menu_new_game.RegisterChild(new Space(10, 20));
 
-            menu_new_game.RegisterChild(new Button("menuButton", hoverID: "menuButtonHover", pressID: "menuButtonPress",
+            menu_new_game.RegisterChild(new Button("Menu\\menuButton", hoverID: "Menu\\menuButtonHover", pressID: "Menu\\menuButtonPress",
                 text: Main.GetText("back"), fontSize: 25, click: (sender, args) => { menuState.SwitchToState("menu_play"); })
             { id = "back", HorizontalMiddle = true });
 

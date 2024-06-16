@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using StoneShard_Mono.Extensions;
 using StoneShard_Mono.Managers;
 using StoneShard_Mono.Utils;
@@ -11,7 +9,6 @@ using StoneShard_Mono.Content.Players;
 using StoneShard_Mono.Content.Rooms;
 using StoneShard_Mono.Content.Components;
 using StoneShard_Mono.Content.Animations;
-using StoneShard_Mono.Content.Rooms.Osbrook;
 using FontStashSharp;
 
 namespace StoneShard_Mono.Content.Scenes
@@ -20,18 +17,26 @@ namespace StoneShard_Mono.Content.Scenes
     {
         public GameScene()
         {
-            CurrentRoom = ContentInstance<tavernInside_floor_1>.NewInstance();
-
             Timer = new();
 
             TurnController = new();
 
+            Screen = new SizeContainer(Main.GameSize) { Name = "Screen" };
+
+            CreateBottomPanel();
+
+            Components.Add(Screen);
+
             selectBox = Main.TextureManager[TexType.Tile, "selectBox"];
 
             wayPoint = Main.TextureManager[TexType.Tile, "wayPoint"];
+
+            CurrentRoom = Room.Empty;
         }
 
         public Room CurrentRoom;
+
+        private Room _targetRoom;
 
         public TurnController TurnController;
 
@@ -51,6 +56,10 @@ namespace StoneShard_Mono.Content.Scenes
 
         public Timer Timer;
 
+        public SizeContainer Screen;
+
+        private bool _changeRoom = false;
+
         public bool DrawSelectBox = true;
 
         public bool DrawPath = true;
@@ -62,6 +71,12 @@ namespace StoneShard_Mono.Content.Scenes
             spriteBatch.DrawRectangle(new(0, 0, Main.GameWidth, Main.GameHeight), GameColors.RoomDark, layerDepth: 1);
 
             CurrentRoom?.Draw(spriteBatch, gameTime);
+
+            spriteBatch.DrawRectangle(new(0, 0, Main.GameWidth, Main.GameHeight), GameColors.RoomDark * (Timer[0] / 255), layerDepth: 0);
+
+            spriteBatch.Rebegin(samplerState: SamplerState.PointClamp, rasterizerState: RasterizerState.CullNone);
+
+            if (CurrentRoom is EmptyRoom) return;
 
             if (DrawSelectBox)
             {
@@ -126,6 +141,9 @@ namespace StoneShard_Mono.Content.Scenes
 
             spriteBatch.DrawString(Main.FontManager["SSFont", 20], "Global: " + (MouseTile + CurrentRoom.TilePostion).ToString(), MouseState.Position.ToVector2() + new Vector2(30, 10), Color.White);
             spriteBatch.DrawString(Main.FontManager["SSFont", 20], "InRoom: " + MouseTile.ToString(), MouseState.Position.ToVector2() + new Vector2(30, 30), Color.White);
+
+            foreach (var component in Components)
+                component.Draw(spriteBatch, gameTime);
         }
 
         public bool Reachable(int x, int y)
@@ -137,6 +155,25 @@ namespace StoneShard_Mono.Content.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            if (_changeRoom && Timer[0] < 255) //切换房间的过渡
+                Timer[0] += 7;
+
+            if (_changeRoom && Timer[0] > 255)
+            {
+                _changeRoom = false;
+
+                _targetRoom.Enter(CurrentRoom);
+
+                CurrentRoom = _targetRoom;
+
+                _targetRoom = null;
+            }
+
+            if (!_changeRoom && Timer[0] > 0)
+                Timer[0] -= 7;
+
+            if (CurrentRoom is EmptyRoom) return;
+
             PreviousMouseState = MouseState;
 
             MouseState = Mouse.GetState();
@@ -179,12 +216,55 @@ namespace StoneShard_Mono.Content.Scenes
             }
 
             CurrentRoom.UpdatePlayer(gameTime);
+
+            foreach (var component in Components)
+                component.Update(gameTime);
         }
 
         public void GoToRoom(Room room)
         {
-            CurrentRoom = room;
-            room.Enter();
+            _targetRoom = room;
+            _changeRoom = true;
+        }
+
+        public void CreateBottomPanel()
+        {
+            var bottomPanel = new SizeContainer(Main.TextureManager[TexType.UI, "InGame\\bottomPanel"].GetSize());
+
+            bottomPanel.HorizontalMiddle = true;
+
+            bottomPanel.Anchor = Anchor.Bottom;
+
+            bottomPanel.OnHover += (sender, args) =>
+            {
+                DrawSelectBox = false;
+            };
+
+            bottomPanel.RegisterChild(new UIImage("InGame\\bottomPanel"));
+
+            var drawing = new EventHandler<(SpriteBatch spriteBatch, GameTime gameTime)>((obj, args) =>
+            {
+                var button = obj as Button;
+
+                var destination = new Rectangle(button.Position.ToPoint() + (button.Size / 2).ToPoint(), button.Size.ToPoint());
+                if (button._isHovering)
+                {
+                    if (button._currentMouse.LeftButton == ButtonState.Pressed)
+                        args.spriteBatch.Draw(button.Press, destination, new(new(0, 0), button.Size.ToPoint()), Color.White * button.Alpha, button.Rotation, button.Size / 2, SpriteEffects.None, 0);
+                    else
+                        args.spriteBatch.Draw(button.Hover, destination, new(new(0, 0), button.Size.ToPoint()), Color.White * button.Alpha, button.Rotation, button.Size / 2, SpriteEffects.None, 0);
+                }
+                else
+                    args.spriteBatch.Draw(button._texture, destination, new(new(0, 0), button.Size.ToPoint()), Color.White * button.Alpha, button.Rotation, button.Size / 2, SpriteEffects.None, 0);
+            });
+
+            bottomPanel.RegisterChild(new Button("InGame\\inventoryButton", hoverID: "InGame\\inventoryButtonHover", pressID: "InGame\\inventoryButtonPress",
+                relativePos: new(88, 52), drawing: drawing));
+
+            bottomPanel.RegisterChild(new Button("InGame\\characterButton", hoverID: "InGame\\characterButtonHover", pressID: "InGame\\characterButtonPress",
+                relativePos: new(130, 52), drawing: drawing));
+
+            Screen.RegisterChild(bottomPanel);
         }
     }
 }

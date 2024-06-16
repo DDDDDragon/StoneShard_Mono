@@ -4,12 +4,14 @@ using StoneShard_Mono.Content.Components;
 using StoneShard_Mono.Content.NPCs;
 using StoneShard_Mono.Content.Players;
 using StoneShard_Mono.Content.Tiles;
+using StoneShard_Mono.Content.Tiles.InRoom;
 using StoneShard_Mono.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace StoneShard_Mono.Content.Rooms
 {
-    public class Room : GameContent
+    public abstract class Room : GameContent
     {
         public List<Entity> Entities;
 
@@ -35,11 +37,13 @@ namespace StoneShard_Mono.Content.Rooms
 
         public Room LastRoom;
 
-        public static string RoomName;
+        public Texture2D BackGround;
 
-        internal static Texture2D BackGround;
+        public int[,] TileMap;
 
-        public static int[,] TileMap;
+        public static Room Empty => new EmptyRoom();
+
+        public override string Name => GetType().Name;
 
         public override void SetDefaults()
         {
@@ -57,11 +61,20 @@ namespace StoneShard_Mono.Content.Rooms
             spriteBatch.Draw(BackGround, Position, null, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 1);
         }
 
-        public virtual void DrawTiles(SpriteBatch spriteBatch, GameTime gameTime)
+        public virtual void DrawAlphaBlend(SpriteBatch spriteBatch, GameTime gameTime)
         {
             foreach(var entity in Entities)
             {
-                if(entity is Tile)
+                if(entity is Tile && !entity.UseAdditive)
+                    entity.Draw(spriteBatch, gameTime);
+            }
+        }
+
+        public virtual void DrawAdditive(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            foreach (var entity in Entities)
+            {
+                if (entity is Tile && entity.UseAdditive)
                     entity.Draw(spriteBatch, gameTime);
             }
         }
@@ -75,9 +88,16 @@ namespace StoneShard_Mono.Content.Rooms
         {
             DrawBack(spriteBatch, gameTime);
 
-            DrawTiles(spriteBatch, gameTime);
+            DrawAlphaBlend(spriteBatch, gameTime);
 
             DrawPlayer(spriteBatch, gameTime);
+
+            DrawAdditive(spriteBatch, gameTime);
+        }
+
+        public override void SetStaticDefaults()
+        {
+            if (Main.RoomID.ContainsKey(GetType().Name)) return;
         }
 
         public override void Update(GameTime gameTime)
@@ -93,8 +113,14 @@ namespace StoneShard_Mono.Content.Rooms
             if (!Main.PlayerTurn)
                 NPCsAction();
 
-            if(CheckAllNPCsDoneAction())
+            if (CheckAllNPCsDoneAction())
                 Main.GameScene?.TurnController.EndNPCTurn();
+
+            if (this != Main.GameScene.CurrentRoom)
+            {
+                RemoveEntity(Player);
+                Player = null;
+            }
         }
 
         public virtual void UpdatePlayer(GameTime gameTime)
@@ -131,14 +157,23 @@ namespace StoneShard_Mono.Content.Rooms
         {
             entity.CurrentRoom = this;
 
-            entity.TilePosition = position;
+            entity.SetPos(position);
 
             Entities.Add(entity);
         }
 
-        public virtual void Enter()
+        public void RemoveEntity(Entity entity) => Entities.Remove(entity);
+
+        public virtual void Enter(Room lastRoom)
         {
 
         }
+    }
+
+    internal class EmptyRoom : Room 
+    {
+        public override void Update(GameTime gameTime) { }
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) { }
     }
 }

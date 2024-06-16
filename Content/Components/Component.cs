@@ -57,11 +57,11 @@ namespace StoneShard_Mono.Content.Components
             if (mouseRect.Intersects(Rectangle))
             {
                 _isHovering = true;
-
+                OnHover?.Invoke(this, new EventArgs());
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed && CanClick)
                 {
                     Clicked = true;
-                    Click?.Invoke(this, new EventArgs());
+                    OnClick?.Invoke(this, new EventArgs());
                 }
             }
 
@@ -71,6 +71,24 @@ namespace StoneShard_Mono.Content.Components
 
             if (HorizontalMiddle) RelativePosition.X = (Parent.Width - Width) / 2;
             if (VerticalMiddle) RelativePosition.Y = (Parent.Height - Height) / 2;
+
+            switch (Anchor)
+            {
+                case Anchor.Left:
+                    RelativePosition.X = 0;
+                    break;
+                case Anchor.Right:
+                    RelativePosition.X = Parent.Width - Width;
+                    break;
+                case Anchor.Top:
+                    RelativePosition.Y = 0;
+                    break;
+                case Anchor.Bottom:
+                    RelativePosition.Y = Parent.Height - Height;
+                    break;
+                case Anchor.None:
+                    break;
+            }
 
             DrawOffset = new(0, 0);
         }
@@ -89,7 +107,9 @@ namespace StoneShard_Mono.Content.Components
 
         internal bool _init = false;
 
-        public event EventHandler Click;
+        public event EventHandler OnClick;
+
+        public event EventHandler OnHover;
 
         public float Scale;
 
@@ -126,6 +146,8 @@ namespace StoneShard_Mono.Content.Components
         public bool HorizontalMiddle;
         public bool VerticalMiddle;
 
+        public Anchor Anchor = Anchor.None;
+
         public virtual bool Visible { get; set; } = true;
 
         public virtual Rectangle Rectangle
@@ -144,4 +166,13 @@ namespace StoneShard_Mono.Content.Components
 
         public string Text { get; set; }
     }
+}
+
+public enum Anchor
+{
+    Bottom,
+    Left,
+    Right,
+    Top,
+    None
 }

@@ -90,13 +90,14 @@ namespace StoneShard_Mono
             else return null;
         }
 
-        public static Door NewDoor(string texID, Vector2 realPos, Vector2 drawOffset = default)
+        public static Door NewDoor<R>(string texID, Vector2 realPos, Vector2 drawOffset = default) where R : Room
         {
             var instance = NewEntity(drawOffset);
             if(instance is Door door)
             {
                 door.Texture = Main.TextureManager[TexType.Tile, texID];
                 door.realPos = realPos;
+                door.ToRoom = ContentInstance<R>.Instance;
                 return door;
             }
             else return null;
