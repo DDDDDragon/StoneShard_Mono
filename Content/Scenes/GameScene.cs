@@ -40,7 +40,7 @@ namespace StoneShard_Mono.Content.Scenes
 
         public TurnController TurnController;
 
-        public Player Player => CurrentRoom.Player;
+        public Player Player => CurrentRoom.LocalPlayer;
 
         public Texture2D selectBox;
 
@@ -259,10 +259,20 @@ namespace StoneShard_Mono.Content.Scenes
             });
 
             bottomPanel.RegisterChild(new Button("InGame\\inventoryButton", hoverID: "InGame\\inventoryButtonHover", pressID: "InGame\\inventoryButtonPress",
-                relativePos: new(88, 52), drawing: drawing));
+                relativePos: new(88, 52), drawing: drawing)
+            { Name = "inventoryButton" });
 
             bottomPanel.RegisterChild(new Button("InGame\\characterButton", hoverID: "InGame\\characterButtonHover", pressID: "InGame\\characterButtonPress",
-                relativePos: new(130, 52), drawing: drawing));
+                relativePos: new(130, 52), drawing: drawing)
+            { Name = "characterButton" });
+
+            bottomPanel.RegisterChild(new Button("InGame\\skillButton", hoverID: "InGame\\skillButtonHover", pressID: "InGame\\skillButtonPress",
+                relativePos: new(172, 52), drawing: drawing)
+            { Name = "skillButton" });
+
+            bottomPanel.RegisterChild(new Button("InGame\\taskButton", hoverID: "InGame\\taskButtonHover", pressID: "InGame\\taskButtonPress",
+                relativePos: new(214, 52), drawing: drawing)
+            { Name = "taskButton" });
 
             Screen.RegisterChild(bottomPanel);
         }

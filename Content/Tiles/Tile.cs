@@ -6,8 +6,6 @@ namespace StoneShard_Mono.Content.Tiles
 {
     public abstract class Tile : Entity
     {
-        public static int TileID;
-
         public virtual Texture2D Texture { get; set; }
 
         public Vector2 TileSize;
@@ -47,7 +45,7 @@ namespace StoneShard_Mono.Content.Tiles
             {
                 for(int j = 0; j < TileSize.Y; j++)
                 {
-                    CurrentRoom[i, j] = TileID;
+                    CurrentRoom[j + (int)TilePosition.Y, i + (int)TilePosition.X] = Main.TileID[GetType().Name];
                 }
             }
         }
@@ -61,5 +59,14 @@ namespace StoneShard_Mono.Content.Tiles
         {
             spriteBatch.Draw(Texture, Position + DrawOffset, null, Color.White * Alpha, 0, Vector2.Zero, 1f, SpriteEffects.None, 1 - TilePosition.Y / 1000);
         }
+    }
+
+    public class TileData : EntityData
+    {
+        public string TexturePath;
+
+        public int SubID;
+
+        public Vector2 DrawOffset;
     }
 }

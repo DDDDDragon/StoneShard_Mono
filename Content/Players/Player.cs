@@ -4,6 +4,7 @@ using StoneShard_Mono.Managers;
 using StoneShard_Mono.Content.Components;
 using StoneShard_Mono.Extensions;
 using StoneShard_Mono.Content.Rooms;
+using StoneShard_Mono.Content.GameValues;
 
 namespace StoneShard_Mono.Content.Players
 {
@@ -13,7 +14,7 @@ namespace StoneShard_Mono.Content.Players
         {
             CurrentRoom = room;
 
-            room.Player = this;
+            room.LocalPlayer = this;
 
             room.RegisterEntity(this, pos);
 
@@ -114,174 +115,174 @@ namespace StoneShard_Mono.Content.Players
         /// <summary>
         /// 主手伤害
         /// </summary>
-        public int MainHandDamage { get; set; }
+        public GameValue<int> MainHandDamage;
 
         /// <summary>
         /// 副手伤害
         /// </summary>
-        public int OffHandDamage { get; set; }
+        public GameValue<int> OffHandDamage;
 
-        public float WeaponDamage { get; set; }
+        public GameValue<float> WeaponDamage;
 
-        public float MainHandEfficiency { get; set; }
+        public GameValue<float> MainHandEfficiency;
 
-        public float OffHandEfficiency { get; set; }
+        public GameValue<float> OffHandEfficiency;
 
-        public float BodypartDamage { get; set; }
+        public GameValue<float> BodypartDamage;
 
-        public float ArmorDamage { get; set; }
+        public GameValue<float> ArmorDamage;
 
-        public float ArmorPenetration { get; set; }
+        public GameValue<float> ArmorPenetration;
 
-        public float Accuracy { get; set; }
+        public GameValue<float> Accuracy;
 
-        public float CritChance { get; set; }
+        public GameValue<float> CritChance;
 
-        public float CritEfficiency { get; set; }
+        public GameValue<float> CritEfficiency;
 
-        public float CounterChance { get; set; }
+        public GameValue<float> CounterChance;
 
-        public float FumbleChance { get; set; }
+        public GameValue<float> FumbleChance;
 
-        public float SkillsEnergyCost { get; set; }
+        public GameValue<float> SkillsEnergyCost;
 
-        public float SpellsEnergyCost { get; set; }
+        public GameValue<float> SpellsEnergyCost;
 
-        public float CooldownsDuration { get; set; }
+        public GameValue<float> CooldownsDuration;
 
-        public int BonusRange { get; set; }
+        public GameValue<int> BonusRange;
 
-        public float BleedChance { get; set; }
+        public GameValue<float> BleedChance;
 
-        public float DazeChance { get; set; }
+        public GameValue<float> DazeChance;
 
-        public float StunChance { get; set; }
+        public GameValue<float> StunChance;
 
-        public float KnockbackChance { get; set; }
+        public GameValue<float> KnockbackChance;
 
-        public float ImmobilizationChance { get; set; }
+        public GameValue<float> ImmobilizationChance;
 
-        public float StaggerChance { get; set; }
+        public GameValue<float> StaggerChance;
 
-        public float LifeDrain { get; set; }
+        public GameValue<float> LifeDrain;
 
-        public float EnergyDrain { get; set; }
+        public GameValue<float> EnergyDrain;
 
-        public float ExperienceGain { get; set; }
+        public GameValue<float> ExperienceGain;
 
-        public int Health { get; set; }
+        public GameValue<int> Health;
 
-        public int MaxHealth { get; set; }
+        public GameValue<int> MaxHealth;
 
-        public float HealthRestoration { get; set; }
+        public GameValue<float> HealthRestoration;
 
-        public float HealingEfficiency { get; set; }
+        public GameValue<float> HealingEfficiency;
 
-        public int Energy { get; set; }
+        public GameValue<int> Energy;
 
-        public int MaxEnergy { get; set; }
+        public GameValue<int> MaxEnergy;
 
-        public float EnergyRestoration { get; set; }
+        public GameValue<float> EnergyRestoration;
 
-        public int Protection { get; set; }
+        public GameValue<int> Protection;
 
-        public float BlockChance { get; set; }
+        public GameValue<float> BlockChance;
 
-        public int BlockPower { get; set; }
+        public GameValue<int> BlockPower;
 
-        public int MaxBlockPower { get; set; }
+        public GameValue<int> MaxBlockPower;
 
-        public float BlockPowerRecovery { get; set; }
+        public GameValue<float> BlockPowerRecovery;
 
-        public float DodgeChance { get; set; }
+        public GameValue<float> DodgeChance;
 
-        public float Stealth { get; set; }
+        public GameValue<float> Stealth;
 
-        public float NoiseProduced { get; set; }
+        public GameValue<float> NoiseProduced;
 
-        public float Lockpicking_Disarming { get; set; }
+        public GameValue<float> Lockpicking_Disarming;
 
-        public int Vision { get; set; }
+        public GameValue<int> Vision;
 
-        public float Fortitude { get; set; }
+        public GameValue<float> Fortitude;
 
-        public float DamageReflection { get; set; }
+        public GameValue<float> DamageReflection;
 
-        public float BleedResistance { get; set; }
+        public GameValue<float> BleedResistance;
 
-        public float ControlResistance { get; set; }
+        public GameValue<float> ControlResistance;
 
-        public float MoveResistance { get; set; }
+        public GameValue<float> MoveResistance;
 
-        public float HungerResistance { get; set; }
+        public GameValue<float> HungerResistance;
 
-        public float IntoxicationResistance { get; set; }
+        public GameValue<float> IntoxicationResistance;
 
-        public float PainResistance { get; set; }
+        public GameValue<float> PainResistance;
 
-        public float FatigueResistance { get; set; }
+        public GameValue<float> FatigueResistance;
 
-        public float DamageTaken { get; set; }
+        public GameValue<float> DamageTaken;
 
-        public float PhysicalResistance { get; set; }
+        public GameValue<float> PhysicalResistance;
 
-        public float NatureResistance { get; set; }
+        public GameValue<float> NatureResistance;
 
-        public float MagicResistance { get; set; }
+        public GameValue<float> MagicResistance;
 
-        public float SlashingResistance { get; set; }
+        public GameValue<float> SlashingResistance;
 
-        public float PiercingResistance { get; set; }
+        public GameValue<float> PiercingResistance;
 
-        public float CrushingResistance { get; set; }
+        public GameValue<float> CrushingResistance;
 
-        public float RendingResistance { get; set; }
+        public GameValue<float> RendingResistance;
 
-        public float FireResistance { get; set; }
+        public GameValue<float> FireResistance;
 
-        public float PoisonResistance { get; set; }
+        public GameValue<float> PoisonResistance;
 
-        public float FrostResistance { get; set; }
+        public GameValue<float> FrostResistance;
 
-        public float ShockResistance { get; set; }
+        public GameValue<float> ShockResistance;
 
-        public float CausticResistace { get; set; }
+        public GameValue<float> CausticResistace;
 
-        public float ArcaneResistace { get; set; }
+        public GameValue<float> ArcaneResistace;
 
-        public float SacredResistance { get; set; }
+        public GameValue<float> SacredResistance;
 
-        public float UnholyResistance { get; set; }
+        public GameValue<float> UnholyResistance;
 
-        public float PsionicResistance { get; set; }
+        public GameValue<float> PsionicResistance;
 
-        public float MagicPower { get; set; }
+        public GameValue<float> MagicPower;
 
-        public float MiracleChance { get; set; }
+        public GameValue<float> MiracleChance;
 
-        public float MiraclePotency { get; set; }
+        public GameValue<float> MiraclePotency;
 
-        public float BackfireChance { get; set; }
+        public GameValue<float> BackfireChance;
 
-        public float BackfireDamage { get; set; }
+        public GameValue<float> BackfireDamage;
 
-        public float PyromanticPower { get; set; }
+        public GameValue<float> PyromanticPower;
 
-        public float GeomanticPower { get; set; }
+        public GameValue<float> GeomanticPower;
 
-        public float VenomanticPower { get; set; }
+        public GameValue<float> VenomanticPower;
 
-        public float CryomanticPower { get; set; }
+        public GameValue<float> CryomanticPower;
 
-        public float ElectromanticPower { get; set; }
+        public GameValue<float> ElectromanticPower;
 
-        public float ArcanisticPower { get; set; }
+        public GameValue<float> ArcanisticPower;
 
-        public float AstromanticPower { get; set; }
+        public GameValue<float> AstromanticPower;
 
-        public float PsionicPower { get; set; }
+        public GameValue<float> PsionicPower;
 
-        public float ChronomanticPower { get; set; }
+        public GameValue<float> ChronomanticPower;
 
         #endregion
     }

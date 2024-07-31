@@ -57,8 +57,6 @@ namespace StoneShard_Mono.Content.Rooms.Osbrook
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            Main.RoomID[GetType().Name] = 1;
         }
 
         public override void Enter(Room lastRoom)
@@ -67,13 +65,13 @@ namespace StoneShard_Mono.Content.Rooms.Osbrook
             {
                 case "tavernInside_floor_2":
 
-                    Player = ContentInstance<Jonna>.Instance;
+                    LocalPlayer = ContentInstance<Jonna>.Instance;
 
                     ContentInstance<Jonna>.Instance.GoToRoom(this, new(13, 4));
 
                     break;
                 default:
-                    Player = ContentInstance<Jonna>.Instance;
+                    LocalPlayer = ContentInstance<Jonna>.Instance;
 
                     ContentInstance<Jonna>.Instance.GoToRoom(this, new(6, 11));
 

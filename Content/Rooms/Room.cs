@@ -4,9 +4,7 @@ using StoneShard_Mono.Content.Components;
 using StoneShard_Mono.Content.NPCs;
 using StoneShard_Mono.Content.Players;
 using StoneShard_Mono.Content.Tiles;
-using StoneShard_Mono.Content.Tiles.InRoom;
 using StoneShard_Mono.Extensions;
-using System;
 using System.Collections.Generic;
 
 namespace StoneShard_Mono.Content.Rooms
@@ -29,7 +27,7 @@ namespace StoneShard_Mono.Content.Rooms
 
         public Vector2 Position;
 
-        public Player Player;
+        public Player LocalPlayer;
 
         public bool inHouse;
 
@@ -81,7 +79,7 @@ namespace StoneShard_Mono.Content.Rooms
 
         public virtual void DrawPlayer(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Player?.Draw(spriteBatch, gameTime);
+            LocalPlayer?.Draw(spriteBatch, gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -98,6 +96,8 @@ namespace StoneShard_Mono.Content.Rooms
         public override void SetStaticDefaults()
         {
             if (Main.RoomID.ContainsKey(GetType().Name)) return;
+
+            Main.RoomID[GetType().Name] = Main.RoomID.Count + 1;
         }
 
         public override void Update(GameTime gameTime)
@@ -105,10 +105,10 @@ namespace StoneShard_Mono.Content.Rooms
             var vec = (Main.GameSize - RealSize) / 2;
             Position = new Vector2((int)vec.X / Main.TileSize, (int)vec.Y / Main.TileSize) * Main.TileSize;
 
-            Main.LocalPlayer = Player;
+            Main.LocalPlayer = LocalPlayer;
 
             foreach (var entity in Entities)
-                if(!(entity is Player)) entity.Update(gameTime);
+                if(entity is not Player) entity.Update(gameTime);
 
             if (!Main.PlayerTurn)
                 NPCsAction();
@@ -118,14 +118,14 @@ namespace StoneShard_Mono.Content.Rooms
 
             if (this != Main.GameScene.CurrentRoom)
             {
-                RemoveEntity(Player);
-                Player = null;
+                RemoveEntity(LocalPlayer);
+                LocalPlayer = null;
             }
         }
 
         public virtual void UpdatePlayer(GameTime gameTime)
         {
-            Player?.Update(gameTime);
+            LocalPlayer?.Update(gameTime);
         }
 
         public virtual void NPCsAction()
@@ -175,5 +175,16 @@ namespace StoneShard_Mono.Content.Rooms
         public override void Update(GameTime gameTime) { }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) { }
+    }
+
+    public class RoomData
+    {
+        public int Width;
+
+        public int Height;
+
+        public string Name;
+
+        public List<EntityData> Entities;
     }
 }

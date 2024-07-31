@@ -11,7 +11,6 @@ using StoneShard_Mono.Managers;
 
 namespace StoneShard_Mono
 {
-    [Serializable]
     public abstract class Entity : GameContent
     {
         public List<Vector2> CurrentPath;
@@ -124,5 +123,14 @@ namespace StoneShard_Mono
             CurrentAnimation.Target = this;
             return true;
         }
+    }
+
+    public class EntityData
+    {
+        public string Name;
+
+        public string Mod;
+
+        public Vector2 RelativePosition;
     }
 }
