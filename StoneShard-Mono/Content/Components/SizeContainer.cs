@@ -29,10 +29,10 @@ namespace StoneShard_Mono.Content.Components
             if (BackgroundColor != default)
                 spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, Width, Height), BackgroundColor * _alpha);
 
-            spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, BorderWidth.X, _height), BorderColor);
-            spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, _width, BorderWidth.Y), BorderColor);
-            spriteBatch.DrawRectangle(new(_width - BorderWidth.Z + (int)Position.X, (int)Position.Y, BorderWidth.Z, Height), BorderColor);
-            spriteBatch.DrawRectangle(new((int)Position.X, _height - BorderWidth.W + (int)Position.Y, _width, BorderWidth.W), BorderColor);
+            spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, BorderWidth.X, Height), BorderColor);
+            spriteBatch.DrawRectangle(new((int)Position.X, (int)Position.Y, Width, BorderWidth.Y), BorderColor);
+            spriteBatch.DrawRectangle(new(Width - BorderWidth.Z + (int)Position.X, (int)Position.Y, BorderWidth.Z, Height), BorderColor);
+            spriteBatch.DrawRectangle(new((int)Position.X, Height - BorderWidth.W + (int)Position.Y, Width, BorderWidth.W), BorderColor);
 
             foreach (var component in Children)
                 component.Draw(spriteBatch, gameTime);

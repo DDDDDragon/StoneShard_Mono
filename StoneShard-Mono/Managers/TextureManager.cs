@@ -68,7 +68,6 @@ namespace StoneShard_Mono.Managers
                 return ret;
             }
         }
-
     }
 
     public enum TexType : int

@@ -8,7 +8,7 @@ namespace StoneShard_Mono.Content.Tiles
     {
         public override void SetDefaults()
         {
-            
+            Mod = "StoneShard";
         }
 
         public override void Update(GameTime gameTime)
@@ -26,6 +26,7 @@ namespace StoneShard_Mono.Content.Tiles
     {
         public override void SetDefaults()
         {
+            Mod = "StoneShard";
             Alpha = 79f / 255;
         }
 

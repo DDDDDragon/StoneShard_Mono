@@ -18,6 +18,8 @@ namespace StoneShard_Mono.Content.Tiles.InRoom.Decorations
 
         public override void SetDefaults()
         {
+            Mod = "StoneShard";
+
             SubID = 1;
 
             TileSize = new(3, 2);
@@ -25,7 +27,8 @@ namespace StoneShard_Mono.Content.Tiles.InRoom.Decorations
 
         public override void SetSubTexture(int subID)
         {
-            Texture = Main.TextureManager[TexType.Tile, $"General\\Decorations\\pelt_{SubID}"];
+            TexturePath = $"General\\Decorations\\pelt_{SubID}";
+            Texture = Main.TextureManager[TexType.Tile, TexturePath];
         }
     }
 }

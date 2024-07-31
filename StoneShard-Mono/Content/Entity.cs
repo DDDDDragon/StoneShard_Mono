@@ -33,6 +33,10 @@ namespace StoneShard_Mono
 
         internal bool _isHovering;
 
+        public string Mod = "";
+
+        public string TexturePath = "";
+
         public bool CanClick = true;
 
         public bool IsMove = false;
@@ -131,6 +135,12 @@ namespace StoneShard_Mono
 
         public string Mod;
 
-        public Vector2 RelativePosition;
+        public string Type;
+
+        public string TexturePath;
+
+        public Vector2 Position;
+
+        public Vector2 DrawOffset;
     }
 }

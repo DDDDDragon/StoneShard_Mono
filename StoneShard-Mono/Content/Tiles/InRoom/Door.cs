@@ -22,7 +22,7 @@ namespace StoneShard_Mono.Content.Tiles.InRoom
 
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Mod = "StoneShard";
 
             TileSize = new(1, 1);
 

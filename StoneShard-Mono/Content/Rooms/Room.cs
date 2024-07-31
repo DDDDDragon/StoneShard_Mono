@@ -19,9 +19,9 @@ namespace StoneShard_Mono.Content.Rooms
 
         public Rectangle TileRectangle => Rectangle.Divide(Main.TileSize);
 
-        public Vector2 TileMapSize => BackGround.GetSize() / Main.TileSize;
+        public Vector2 TileMapSize => Background.GetSize() / Main.TileSize;
 
-        public Vector2 RealSize => BackGround.GetSize();
+        public Vector2 RealSize => Background.GetSize();
 
         public Vector2 TilePostion => Position / Main.TileSize;
 
@@ -35,7 +35,9 @@ namespace StoneShard_Mono.Content.Rooms
 
         public Room LastRoom;
 
-        public Texture2D BackGround;
+        public Texture2D Background;
+
+        public string BackgroundPath;
 
         public int[,] TileMap;
 
@@ -56,7 +58,7 @@ namespace StoneShard_Mono.Content.Rooms
 
         public virtual void DrawBack(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(BackGround, Position, null, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 1);
+            spriteBatch.Draw(Background, Position, null, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 1);
         }
 
         public virtual void DrawAlphaBlend(SpriteBatch spriteBatch, GameTime gameTime)
@@ -164,6 +166,39 @@ namespace StoneShard_Mono.Content.Rooms
 
         public void RemoveEntity(Entity entity) => Entities.Remove(entity);
 
+        public RoomData ToData()
+        {
+            RoomData roomData = new RoomData(TileMapSize);
+
+            roomData.Name = Name;
+            roomData.BackgroundPath = BackgroundPath;
+
+            foreach (var entity in Entities)
+            {
+                EntityData data = new();
+
+                data.Name = entity.GetType().Name;
+                data.Mod = entity.Mod;
+                data.Position = entity.TilePosition;
+                data.TexturePath = entity.TexturePath;
+
+                if (entity is Tile tile)
+                {
+                    data.Type = "Tile";
+                    data.DrawOffset = tile.DrawOffset;
+                }
+
+                if(entity is NPC npc)
+                {
+
+                }
+
+                roomData.Entities.Add(data);
+            }
+
+            return roomData;
+        }
+
         public virtual void Enter(Room lastRoom)
         {
 
@@ -179,11 +214,25 @@ namespace StoneShard_Mono.Content.Rooms
 
     public class RoomData
     {
+        public RoomData(int width, int height)
+        {
+            Entities = new();
+            Width = width;
+            Height = height;
+            Reachable = new int[height, width];
+        }
+
+        public RoomData(Vector2 roomSize) : this((int)roomSize.X, (int)roomSize.Y) { }
+
         public int Width;
 
         public int Height;
 
         public string Name;
+
+        public string BackgroundPath;
+
+        public int[,] Reachable;
 
         public List<EntityData> Entities;
     }

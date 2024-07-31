@@ -51,40 +51,23 @@ namespace StoneShard_Mono
             var instance = NewInstance();
             if (instance is Entity entity)
             {
-                entity.DrawOffset += drawOffset;
+                entity.DrawOffset = drawOffset;
                 return entity;
             }
             else return null;
         }
 
-        public static OpaqueFore NewOpaqueFore(string texID)
-        {
-            var instance = NewEntity();
-            if (instance is OpaqueFore ofore)
-            {
-                ofore.Texture = Main.TextureManager[TexType.Tile, texID];
-                return ofore;
-            }
-            else return null;
-        }
-
-        public static TransparentFore NewTransparentFore(string texID)
-        {
-            var instance = NewEntity();
-            if (instance is TransparentFore tfore)
-            {
-                tfore.Texture = Main.TextureManager[TexType.Tile, texID];
-                return tfore;
-            }
-            else return null;
-        }
-
-        public static T NewTile(int subID = 1, Vector2 drawOffset = default)
+        public static T NewTile(int subID = 1, Vector2 drawOffset = default, string texID = "")
         {
             var instance = NewEntity(drawOffset);
             if (instance is Tile tile)
             {
                 tile.SubID = subID;
+                if (texID != "")
+                {
+                    tile.Texture = Main.TextureManager[TexType.Tile, texID];
+                    tile.TexturePath = texID;
+                }
                 return tile as T;
             }
             else return null;
@@ -96,6 +79,7 @@ namespace StoneShard_Mono
             if(instance is Door door)
             {
                 door.Texture = Main.TextureManager[TexType.Tile, texID];
+                door.TexturePath = texID;
                 door.realPos = realPos;
                 door.ToRoom = ContentInstance<R>.Instance;
                 return door;

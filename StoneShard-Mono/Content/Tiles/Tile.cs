@@ -32,6 +32,8 @@ namespace StoneShard_Mono.Content.Tiles
             get => (TilePosition + CurrentRoom.TilePostion) * Main.TileSize; 
         }
 
+        public Vector2 TextureOffset;
+
         public virtual void SetSubTexture(int subID)
         {
 
@@ -57,16 +59,7 @@ namespace StoneShard_Mono.Content.Tiles
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(Texture, Position + DrawOffset, null, Color.White * Alpha, 0, Vector2.Zero, 1f, SpriteEffects.None, 1 - TilePosition.Y / 1000);
+            spriteBatch.Draw(Texture, Position + DrawOffset + TextureOffset, null, Color.White * Alpha, 0, Vector2.Zero, 1f, SpriteEffects.None, 1 - TilePosition.Y / 1000);
         }
-    }
-
-    public class TileData : EntityData
-    {
-        public string TexturePath;
-
-        public int SubID;
-
-        public Vector2 DrawOffset;
     }
 }

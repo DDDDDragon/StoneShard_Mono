@@ -5,11 +5,13 @@ using StoneShard_Mono_RoomEditor.Content.NPCs;
 using StoneShard_Mono_RoomEditor.Content.Players;
 using StoneShard_Mono_RoomEditor.Content.Tiles;
 using StoneShard_Mono_RoomEditor.Extensions;
+using StoneShard_Mono_RoomEditor.Managers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StoneShard_Mono_RoomEditor.Content.Rooms
 {
-    public abstract class Room : GameContent
+    public class Room : GameContent
     {
         public List<Entity> Entities;
 
@@ -100,8 +102,6 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
 
         public override void Update(GameTime gameTime)
         {
-            var vec = (Main.GameSize - RealSize) / 2;
-            Position = new Vector2((int)vec.X / Main.TileSize, (int)vec.Y / Main.TileSize) * Main.TileSize;
         }
 
         public int this[int x, int y]
@@ -125,6 +125,37 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
         {
 
         }
+
+        public void LoadData(RoomData data)
+        {
+            Name = data.Name;
+            BackGround = Main.TextureManager[TexType.Tile, data.BackgroundPath];
+
+            foreach (var entity in data.Entities)
+            {
+                if(entity.Type == "Tile")
+                {
+                    if(entity.Mod == "StoneShard")
+                    {
+                        if (entity.Name == "Door")
+                        {
+
+                        }
+                        else
+                        {
+                            var ct = typeof(ContentInstance<>);
+
+                            var tileType = typeof(Room).Assembly.GetTypes().Where(t => t.Name == entity.Name).First();
+
+                            Entity e = (Entity)ct.MakeGenericType(tileType).GetMethod("NewTile")
+                                .Invoke(null, new object[] { 1, entity.DrawOffset, entity.TexturePath });
+
+                            RegisterEntity(e, entity.Position);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     internal class EmptyRoom : Room
@@ -141,6 +172,10 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
         public int Height;
 
         public string Name;
+
+        public string BackgroundPath;
+
+        public int[,] Reachable;
 
         public List<EntityData> Entities;
     }

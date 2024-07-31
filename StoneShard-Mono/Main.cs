@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using StoneShard_Mono.Content.Players;
+using StoneShard_Mono.Content.Rooms;
 using StoneShard_Mono.Content.Rooms.Osbrook;
 using StoneShard_Mono.Content.Scenes;
 using StoneShard_Mono.Loaders;
@@ -88,6 +89,10 @@ namespace StoneShard_Mono
             SetCursor("cursor");
 
             EntityLoader.Load();
+
+            RoomData rd = ContentInstance<tavernInside_floor_1>.Instance.ToData();
+
+            File.WriteAllText(Path.Combine(GamePath, "adada.json"), JsonConvert.SerializeObject(rd, Formatting.Indented));
 
             base.Initialize();
         }

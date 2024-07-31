@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 
 namespace StoneShard_Mono_RoomEditor.Extensions
 {
@@ -21,6 +22,28 @@ namespace StoneShard_Mono_RoomEditor.Extensions
             spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, transformMatrix);
         }
 
+        public static void Change(this SpriteBatch spriteBatch, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null)
+        {
+            var type = spriteBatch.GetType();
+
+            var sMode = sortMode ?? (SpriteSortMode)type.GetField("_sortMode", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var bState = blendState ?? (BlendState)type.GetField("_blendState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var sState = samplerState ?? (SamplerState)type.GetField("_samplerState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var dsState = depthStencilState ?? (DepthStencilState)type.GetField("_depthStencilState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var rState = rasterizerState ?? (RasterizerState)type.GetField("_rasterizerState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var efct = effect ?? (Effect)type.GetField("_effect", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var sprEffect = (SpriteEffect)type.GetField("_spriteEffect", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(spriteBatch);
+
+            var matrix = transformMatrix ?? sprEffect.TransformMatrix;
+
+            spriteBatch.Rebegin(sMode, bState, sState, dsState, rState, efct, matrix);
+        }
         public static void DrawLine(this SpriteBatch batch, Line line, Color color)
         {
             float radian = line.ToVector2().GetRadian();

@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using StoneShard_Mono_RoomEditor.Content.Components;
+using StoneShard_Mono_RoomEditor.Content.Rooms;
 using StoneShard_Mono_RoomEditor.Content.Scenes;
 using StoneShard_Mono_RoomEditor.Extensions;
+using System.IO;
 
 namespace StoneShard_Mono_RoomEditor.Content
 {
@@ -32,7 +35,11 @@ namespace StoneShard_Mono_RoomEditor.Content
             rect.BorderWidth.Set(1);
             roomView.RegisterChild(rect);
 
-            var room = new RoomContainer();
+            var json = File.ReadAllText(Path.Combine(Main.GamePath, "adada.json"));
+            var rd = JsonConvert.DeserializeObject<RoomData>(json);
+            var room = new RoomContainer(rd);
+            room.HorizontalMiddle = true;
+            room.VerticalMiddle = true;
             roomView.RegisterChild(room);
 
             roomViewContainer.RegisterChild(roomView);

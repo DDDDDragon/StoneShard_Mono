@@ -11,7 +11,7 @@ namespace StoneShard_Mono.Content.Rooms.Osbrook
         {
             base.SetDefaults(); 
 
-            BackGround = Main.TextureManager[TexType.Tile, "Osbrook\\tavernInside_floor_2\\background"];
+            Background = Main.TextureManager[TexType.Tile, "Osbrook\\tavernInside_floor_2\\background"];
 
             inHouse = true;
 

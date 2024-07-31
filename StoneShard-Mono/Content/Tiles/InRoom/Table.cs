@@ -19,16 +19,19 @@ namespace StoneShard_Mono.Content.Tiles.InRoom
 
         public override void SetDefaults()
         {
+            Mod = "StoneShard";
+
             SubID = 1;
 
-            DrawOffset = new(-Main.TileSize, - Main.TileSize);
+            TextureOffset = new(-Main.TileSize, - Main.TileSize);
 
             TileSize = new(2, 1);
         }
 
         public override void SetSubTexture(int subID)
         {
-            Texture = Main.TextureManager[TexType.Tile, $"General\\table_{SubID}"];
+            TexturePath = $"General\\table_{SubID}";
+            Texture = Main.TextureManager[TexType.Tile, TexturePath];
         }
     }
 }

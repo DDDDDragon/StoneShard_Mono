@@ -15,7 +15,11 @@ namespace StoneShard_Mono_RoomEditor.Content
 
         public float Rotation;
 
-        public float Alpha = 1;
+        public float Alpha = 1; 
+        
+        public string Mod = "";
+
+        public string TexturePath = "";
 
         public bool UseAdditive = false; 
         
@@ -56,6 +60,14 @@ namespace StoneShard_Mono_RoomEditor.Content
     {
         public string Name;
 
-        public Vector2 RelativePosition;
+        public string Mod;
+
+        public string TexturePath;
+
+        public string Type;
+
+        public Vector2 Position;
+
+        public Vector2 DrawOffset;
     }
 }

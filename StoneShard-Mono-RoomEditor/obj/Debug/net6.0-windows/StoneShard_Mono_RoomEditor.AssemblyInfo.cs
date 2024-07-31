@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StoneShard_Mono_RoomEditor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3609f5405e6d77ae8476230cd8114426eb6f030")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c1f7792cd2649207c67d374fb1e54128ab82d8f")]
 [assembly: System.Reflection.AssemblyProductAttribute("StoneShard_Mono_RoomEditor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StoneShard_Mono_RoomEditor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

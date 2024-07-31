@@ -12,7 +12,8 @@ namespace StoneShard_Mono.Content.Rooms.Osbrook
         {
             base.SetDefaults();
 
-            BackGround = Main.TextureManager[TexType.Tile, "Osbrook\\tavernInside_floor_1\\background"];
+            BackgroundPath = "Osbrook\\tavernInside_floor_1\\background";
+            Background = Main.TextureManager[TexType.Tile, BackgroundPath];
 
             inHouse = true;
 
@@ -33,11 +34,11 @@ namespace StoneShard_Mono.Content.Rooms.Osbrook
                 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
             }; 
 
-            RegisterEntity(ContentInstance<OpaqueFore>.NewOpaqueFore("Osbrook\\tavernInside_floor_1\\opaqueFore1"), new(1, 5));
+            RegisterEntity(ContentInstance<OpaqueFore>.NewTile(texID: "Osbrook\\tavernInside_floor_1\\opaqueFore1"), new(1, 5));
 
-            RegisterEntity(ContentInstance<TransparentFore>.NewTransparentFore("Osbrook\\tavernInside_floor_1\\transparentFore1"), new(1, 10));
+            RegisterEntity(ContentInstance<TransparentFore>.NewTile(texID: "Osbrook\\tavernInside_floor_1\\transparentFore1"), new(1, 10));
 
-            RegisterEntity(ContentInstance<TransparentFore>.NewTransparentFore("Osbrook\\tavernInside_floor_1\\transparentFore2"), new(8, 5));
+            RegisterEntity(ContentInstance<TransparentFore>.NewTile(texID: "Osbrook\\tavernInside_floor_1\\transparentFore2"), new(8, 5));
 
             RegisterEntity(ContentInstance<Door>.NewDoor<tavernInside_floor_2>("Osbrook\\tavernInside_floor_1\\upfloor", new(13, 3), new(8, -8)), new(12, 1));
 

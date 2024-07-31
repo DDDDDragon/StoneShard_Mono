@@ -10,6 +10,11 @@ namespace StoneShard_Mono.Content.Tiles.InRoom.Decorations
 {
     public abstract class Decoration : Tile
     {
+        public override void SetDefaults()
+        {
+            Mod = "StoneShard";
+        }
+
         public override void Update(GameTime gameTime) { }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

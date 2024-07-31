@@ -47,12 +47,11 @@ namespace StoneShard_Mono_RoomEditor
             TextureManager = new TextureManager();
             FontManager = new FontManager();
             LocalizationManager = new LocalizationManager();
-
-            Scene = new MainScene();
         }
 
         protected override void Initialize()
         {
+            TextureManager.Load();
             // TODO: Add your initialization logic here
 
             base.Initialize();
@@ -61,6 +60,8 @@ namespace StoneShard_Mono_RoomEditor
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Scene = new MainScene();
 
             // TODO: use this.Content to load your game content here
         }
