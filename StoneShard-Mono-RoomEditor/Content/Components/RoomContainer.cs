@@ -36,6 +36,9 @@ namespace StoneShard_Mono_RoomEditor.Content.Components
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Room.ViewPortPos = Parent.Position;
+            Room.ViewPort = new((int)Parent.Position.X, (int)Parent.Position.Y, Parent.Width, Parent.Height);
+            Room.View = (Parent as ZoomableContainer).View;
             Room.Position = Position;
             Room.Update(gameTime);
         }

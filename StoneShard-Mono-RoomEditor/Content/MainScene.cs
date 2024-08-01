@@ -32,7 +32,7 @@ namespace StoneShard_Mono_RoomEditor.Content
             roomView.Initialize();
 
             var rect = new SizeContainer(1500, 840);
-            rect.BorderWidth.Set(1);
+            rect.BorderWidth.Set(10);
             roomView.RegisterChild(rect);
 
             var json = File.ReadAllText(Path.Combine(Main.GamePath, "adada.json"));

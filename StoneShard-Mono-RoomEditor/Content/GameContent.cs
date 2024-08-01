@@ -13,6 +13,11 @@ namespace StoneShard_Mono_RoomEditor.Content
     {
         public virtual string Name { get; set; }
 
+        public virtual void PreDraw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+
+        }
+
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             

@@ -41,6 +41,12 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
 
         public int[,] TileMap;
 
+        public Vector2 ViewPortPos;
+
+        public Viewport ViewPort;
+
+        public Matrix View;
+
         public static Room Empty => new EmptyRoom();
 
         public override string Name => GetType().Name;
@@ -66,7 +72,10 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
             foreach (var entity in Entities)
             {
                 if (entity is Tile && !entity.UseAdditive)
+                {
+                    entity.PreDraw(spriteBatch, gameTime);
                     entity.Draw(spriteBatch, gameTime);
+                }
             }
         }
 
@@ -75,7 +84,10 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
             foreach (var entity in Entities)
             {
                 if (entity is Tile && entity.UseAdditive)
+                {
+                    entity.PreDraw(spriteBatch, gameTime);
                     entity.Draw(spriteBatch, gameTime);
+                }
             }
         }
 
@@ -102,6 +114,8 @@ namespace StoneShard_Mono_RoomEditor.Content.Rooms
 
         public override void Update(GameTime gameTime)
         {
+            foreach (var entity in Entities)
+                if (entity is not Player) entity.Update(gameTime);
         }
 
         public int this[int x, int y]

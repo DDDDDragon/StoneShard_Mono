@@ -46,20 +46,7 @@ namespace StoneShard_Mono_RoomEditor.Content.Components
         public void ZoomCamera(float scale)
         {
             ZoomScale *= scale;
-        }
-
-        public Vector2 ConvertScreenToWorld(Vector2 location)
-        {
-            Vector3 t = new Vector3(location, 0);
-            t = Main.Graphics.GraphicsDevice.Viewport.Unproject(t, Projection, View, Matrix.Identity);
-            return new Vector2(t.X, t.Y);
-        }
-
-        public Vector2 ConvertWorldToScreen(Vector2 location)
-        {
-            Vector3 t = new Vector3(location, 0);
-            t = Main.Graphics.GraphicsDevice.Viewport.Project(t, Projection, View, Matrix.Identity);
-            return new Vector2(t.X, t.Y);
+            ZoomScale = (float)Math.Round(ZoomScale, 4);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -93,15 +80,23 @@ namespace StoneShard_Mono_RoomEditor.Content.Components
             if (Keyboard.GetState().IsKeyDown(Keys.W))
                 MoveCamera(new(0, -2));
             if (Keyboard.GetState().IsKeyDown(Keys.S))
-                MoveCamera(new(0, 2)); var deltaWheel = _currentMouse.ScrollWheelValue - _previousMouse.ScrollWheelValue;
+                MoveCamera(new(0, 2)); 
+            var deltaWheel = _currentMouse.ScrollWheelValue - _previousMouse.ScrollWheelValue;
+
             if (deltaWheel > 0)
                 ZoomCamera(1.25f);
+            if (ZoomScale > 5) ZoomScale = 5;
             if (deltaWheel < 0)
                 ZoomCamera(0.8f);
+            if (ZoomScale < 0.2) ZoomScale = 0.2f;
 
             View = Matrix.CreateTranslation(new(-Size / 2, 0)) *
-                Matrix.CreateScale(ZoomScale) *
-                Matrix.CreateTranslation(new(Size / 2, 0));
+                Matrix.CreateScale(ZoomScale, ZoomScale, 1) *
+                Matrix.CreateTranslation(new(Size / 2, 0)) *
+                Matrix.CreateTranslation(new(CameraPosition * ZoomScale, 0));
+
+            Main.CurrentProjection = Projection;
+            Main.CurrentView = View;
 
             foreach (var child in Children)
             {

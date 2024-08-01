@@ -32,6 +32,12 @@ namespace StoneShard_Mono_RoomEditor
         public static FontManager FontManager;
         public static LocalizationManager LocalizationManager;
 
+        public static Matrix? CurrentProjection = null;
+
+        public static Matrix? CurrentView = null;
+
+        public static Entity MouseEntity = null;
+
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this)
@@ -70,6 +76,8 @@ namespace StoneShard_Mono_RoomEditor
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            MouseEntity = null;
 
             Scene.Update(gameTime);
 
